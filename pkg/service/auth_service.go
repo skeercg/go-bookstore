@@ -2,18 +2,18 @@ package service
 
 import "go-bookstore/pkg/repository"
 
-type AuthService struct {
+type AuthServiceService struct {
 	repo repository.Authorization
 }
 
-func NewAuthService(repo repository.Authorization) *AuthService {
-	return &AuthService{repo: repo}
+func NewAuthService(repo repository.Authorization) *AuthServiceService {
+	return &AuthServiceService{repo: repo}
 }
 
-func (r *AuthService) CreateUser() (string, error) {
+func (r *AuthServiceService) CreateUser() (string, error) {
 	return "", nil
 }
 
-func (r *AuthService) GetUser() (string, error) {
+func (r *AuthServiceService) GetUser() (string, error) {
 	return "", nil
 }

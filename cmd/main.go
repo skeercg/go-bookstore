@@ -2,7 +2,10 @@ package main
 
 import (
 	"github.com/spf13/viper"
+	go_bookstore "go-bookstore"
+	controller "go-bookstore/pkg/controller"
 	"go-bookstore/pkg/repository"
+	"go-bookstore/pkg/service"
 	"log"
 	"os"
 )
@@ -26,8 +29,15 @@ func main() {
 	}
 
 	repos := repository.NewRepository(db)
+	services := service.NewService(repos)
+	c := controller.NewController(services)
 
-	_ = repos
+	srv := new(go_bookstore.Server)
+	go func() {
+		if err := srv.Run(viper.GetString("port"), c.InitRoutes()); err != nil {
+			log.Fatalf("error occured while running http server: %s", err.Error())
+		}
+	}()
 }
 
 func initConfig() error {
