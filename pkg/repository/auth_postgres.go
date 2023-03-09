@@ -2,6 +2,7 @@ package repository
 
 import (
 	"github.com/jmoiron/sqlx"
+	"go-bookstore/pkg/model"
 )
 
 type AuthPostgres struct {
@@ -12,10 +13,10 @@ func NewAuthPostgres(db *sqlx.DB) *AuthPostgres {
 	return &AuthPostgres{db: db}
 }
 
-func (r *AuthPostgres) CreateUser() (string, error) {
-	return "", nil
+func (r *AuthPostgres) CreateUser(user model.User) error {
+	return nil
 }
 
-func (r *AuthPostgres) GetUser() (string, error) {
-	return "", nil
+func (r *AuthPostgres) GetUser(username, password string) (model.User, error) {
+	return model.User{}, nil
 }

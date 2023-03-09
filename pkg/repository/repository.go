@@ -1,10 +1,13 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"github.com/jmoiron/sqlx"
+	"go-bookstore/pkg/model"
+)
 
 type Authorization interface {
-	CreateUser() (string, error)
-	GetUser() (string, error)
+	CreateUser(user model.User) error
+	GetUser(username, password string) (model.User, error)
 }
 
 type Bookstore interface {

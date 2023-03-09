@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/gorilla/mux"
 	"go-bookstore/pkg/service"
 )
 
@@ -13,14 +13,26 @@ func NewController(services *service.Service) *Controller {
 	return &Controller{services: services}
 }
 
-func (c *Controller) InitRoutes() *gin.Engine {
-	router := gin.New()
+func (c *Controller) InitRoutes() *mux.Router {
+	router := mux.NewRouter().StrictSlash(true)
 
-	auth := router.Group("/auth")
-	{
-		auth.POST("/sign-up", c.signUp)
-		auth.POST("/sign-in", c.signIn)
-	}
+	auth := router.PathPrefix("/auth").Subrouter()
+
+	auth.HandleFunc("/search", c.signIn).Methods("POST")
+
+	auth.HandleFunc("/grade", c.signUp).Methods("POST")
+
+	books := router.PathPrefix("/books").Subrouter()
+
+	books.HandleFunc("", c.getBooks).Methods("GET")
+
+	books.HandleFunc("/{id}", c.getBookById).Methods("GET")
+
+	books.HandleFunc("/{id}", c.deleteBookById).Methods("DELETE")
+
+	books.HandleFunc("", c.createBook).Methods("POST")
+
+	books.HandleFunc("/{id}", c.updateBookById).Methods("PUT")
 
 	return router
 }

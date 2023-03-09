@@ -1,10 +1,13 @@
 package service
 
-import "go-bookstore/pkg/repository"
+import (
+	"go-bookstore/pkg/model"
+	"go-bookstore/pkg/repository"
+)
 
 type AuthService interface {
-	CreateUser() (string, error)
-	GetUser() (string, error)
+	CreateUser(user model.User) error
+	GenerateToken(username, password string) (string, error)
 }
 
 type Bookstore interface {
