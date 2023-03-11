@@ -20,6 +20,7 @@ func (c *Controller) signUp(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+
 }
 
 type signInInput struct {
@@ -37,10 +38,15 @@ func (c *Controller) signIn(w http.ResponseWriter, r *http.Request) {
 
 	token, err := c.services.AuthService.GenerateToken(u.Username, u.Password)
 	if err != nil {
+		log.Print(err)
 		return
 	}
 
-	json.NewEncoder(w).Encode(map[string]interface{}{
+	err = json.NewEncoder(w).Encode(map[string]interface{}{
 		"token": token,
 	})
+
+	if err != nil {
+		log.Print(err)
+	}
 }

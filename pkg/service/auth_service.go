@@ -9,10 +9,11 @@ import (
 	"time"
 )
 
+var signingKey = []byte("qrkjk#4#%35FSFJlja#4353KSFjH")
+
 const (
-	salt       = "hjqrhjqw124617ajfhajs"
-	signingKey = "qrkjk#4#%35FSFJlja#4353KSFjH"
-	tokenTTL   = 12 * time.Hour
+	salt     = "hjqrhjqw124617ajfhajs"
+	tokenTTL = 12 * time.Hour
 )
 
 type tokenClaims struct {

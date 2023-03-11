@@ -18,9 +18,9 @@ func (c *Controller) InitRoutes() *mux.Router {
 
 	auth := router.PathPrefix("/auth").Subrouter()
 
-	auth.HandleFunc("/search", c.signIn).Methods("POST")
+	auth.HandleFunc("/sign-in", c.signIn).Methods("POST")
 
-	auth.HandleFunc("/grade", c.signUp).Methods("POST")
+	auth.HandleFunc("/sign-up", c.signUp).Methods("POST")
 
 	books := router.PathPrefix("/books").Subrouter()
 

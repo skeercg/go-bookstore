@@ -1,12 +1,14 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	"gorm.io/gorm"
+)
 
 type BookstorePostgres struct {
-	db *sqlx.DB
+	db *gorm.DB
 }
 
-func NewBookstorePostgres(db *sqlx.DB) *BookstorePostgres {
+func NewBookstorePostgres(db *gorm.DB) *BookstorePostgres {
 	return &BookstorePostgres{db: db}
 }
 
