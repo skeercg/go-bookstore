@@ -7,11 +7,6 @@ import (
 	"gorm.io/gorm"
 )
 
-const (
-	usersTable = "users"
-	booksTable = "books"
-)
-
 type Config struct {
 	Host     string
 	Port     string

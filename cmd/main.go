@@ -34,7 +34,7 @@ func main() {
 
 	router := c.InitRoutes()
 
-	err = http.ListenAndServe(":8181", router)
+	err = http.ListenAndServe(viper.GetString("port"), router)
 	if err != nil {
 		log.Print(err)
 	}
