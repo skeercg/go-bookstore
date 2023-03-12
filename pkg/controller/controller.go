@@ -24,6 +24,8 @@ func (c *Controller) InitRoutes() *mux.Router {
 
 	books := router.PathPrefix("/books").Subrouter()
 
+	books.Use(c.userIdentity)
+
 	books.HandleFunc("", c.getBooks).Methods("GET")
 
 	books.HandleFunc("/{id}", c.getBookById).Methods("GET")

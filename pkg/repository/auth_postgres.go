@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"fmt"
+	"errors"
 	"go-bookstore/pkg/model"
 	"gorm.io/gorm"
 )
@@ -20,22 +20,15 @@ func (r *AuthPostgres) CreateUser(user model.User) error {
 	return nil
 }
 
-type userNotFoundError struct{}
-
-func (er *userNotFoundError) Error() string {
-	return "user not found"
-}
-
 func (r *AuthPostgres) GetUser(username, password string) (*model.User, error) {
 	var user *model.User
 
 	if result := r.db.Where("username = ?", username).First(&user); result.Error != nil {
-		fmt.Println(result.Error)
 		return nil, result.Error
 	}
 
 	if user.Password != password {
-		return nil, &userNotFoundError{}
+		return nil, errors.New("no such user")
 	}
 
 	return user, nil

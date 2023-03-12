@@ -8,6 +8,7 @@ import (
 type AuthService interface {
 	CreateUser(user model.User) error
 	GenerateToken(username, password string) (string, error)
+	ParseToken(token string) (int, error)
 }
 
 type Bookstore interface {
