@@ -11,8 +11,8 @@ type Authorization interface {
 }
 
 type Bookstore interface {
-	Create() error
-	GetAll() error
+	Create(book model.Book) error
+	GetAll(title, sort string) ([]model.Book, error)
 	GetById() error
 	Delete() error
 	Update() error

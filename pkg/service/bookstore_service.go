@@ -1,6 +1,9 @@
 package service
 
-import "go-bookstore/pkg/repository"
+import (
+	"go-bookstore/pkg/model"
+	"go-bookstore/pkg/repository"
+)
 
 type BookstoreService struct {
 	repo repository.Bookstore
@@ -10,12 +13,16 @@ func NewBookstoreService(repo repository.Bookstore) *BookstoreService {
 	return &BookstoreService{repo: repo}
 }
 
-func (r *BookstoreService) Create() error {
-	return nil
+func (r *BookstoreService) Create(book model.Book) error {
+	err := r.repo.Create(book)
+
+	return err
 }
 
-func (r *BookstoreService) GetAll() error {
-	return nil
+func (r *BookstoreService) GetAll(title, sort string) ([]model.Book, error) {
+	books, err := r.repo.GetAll(title, sort)
+
+	return books, err
 }
 
 func (r *BookstoreService) GetById() error {
