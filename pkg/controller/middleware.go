@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 	"strings"
 )
@@ -13,7 +12,7 @@ func (c *Controller) userIdentity(h http.Handler) http.Handler {
 		headerParts := strings.Split(header, " ")
 
 		if len(headerParts) != 2 {
-			log.Print("invalid token length")
+			w.WriteHeader(401)
 			return
 		}
 

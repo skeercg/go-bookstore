@@ -14,9 +14,9 @@ type AuthService interface {
 type Bookstore interface {
 	Create(book model.Book) error
 	GetAll(title, sort string) ([]model.Book, error)
-	GetById() error
-	Delete() error
-	Update() error
+	GetById(id int) (model.Book, error)
+	Delete(id int) error
+	Update(book model.Book, id int) error
 }
 
 type Service struct {

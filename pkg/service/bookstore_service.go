@@ -25,14 +25,20 @@ func (r *BookstoreService) GetAll(title, sort string) ([]model.Book, error) {
 	return books, err
 }
 
-func (r *BookstoreService) GetById() error {
-	return nil
+func (r *BookstoreService) GetById(id int) (model.Book, error) {
+	book, err := r.repo.GetById(id)
+
+	return book, err
 }
 
-func (r *BookstoreService) Delete() error {
-	return nil
+func (r *BookstoreService) Delete(id int) error {
+	err := r.repo.Delete(id)
+
+	return err
 }
 
-func (r *BookstoreService) Update() error {
-	return nil
+func (r *BookstoreService) Update(book model.Book, id int) error {
+	err := r.repo.Update(book, id)
+
+	return err
 }

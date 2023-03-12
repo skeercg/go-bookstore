@@ -2,9 +2,11 @@ package controller
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"go-bookstore/pkg/model"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type searchParams struct {
@@ -25,14 +27,39 @@ func (c *Controller) getBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *Controller) getBookById(w http.ResponseWriter, r *http.Request) {
-	err := c.services.Bookstore.GetById()
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+
 	if err != nil {
+		w.WriteHeader(400)
+		return
+	}
+
+	book, err := c.services.Bookstore.GetById(id)
+
+	if err != nil {
+		w.WriteHeader(400)
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(book)
+
+	if err != nil {
+		w.WriteHeader(400)
 		return
 	}
 }
 
 func (c *Controller) deleteBookById(w http.ResponseWriter, r *http.Request) {
-	err := c.services.Bookstore.Delete()
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+
+	if err != nil {
+		w.WriteHeader(400)
+		return
+	}
+
+	err = c.services.Bookstore.Delete(id)
 	if err != nil {
 		return
 	}
@@ -43,19 +70,34 @@ func (c *Controller) createBook(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&book)
 
 	if err != nil {
-		log.Print(err)
+		w.WriteHeader(400)
+		return
 	}
 
 	err = c.services.Bookstore.Create(book)
 
 	if err != nil {
-		log.Print(err)
+		w.WriteHeader(400)
+		return
 	}
 }
 
 func (c *Controller) updateBookById(w http.ResponseWriter, r *http.Request) {
-	err := c.services.Bookstore.Update()
+	var book model.Book
+	err := json.NewDecoder(r.Body).Decode(&book)
+
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
+
 	if err != nil {
+		w.WriteHeader(400)
+		return
+	}
+
+	err = c.services.Bookstore.Update(book, id)
+
+	if err != nil {
+		w.WriteHeader(400)
 		return
 	}
 }
